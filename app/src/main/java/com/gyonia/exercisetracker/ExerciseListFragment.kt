@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
@@ -81,7 +82,16 @@ class ExerciseListFragment : Fragment(), SimpleItemRecyclerViewAdapter.ExerciseI
     }
 
     override fun onItemLongClick(position: Int, view: View): Boolean {
-        TODO("Not yet implemented")
+        val popup = PopupMenu(requireActivity(), view)
+        popup.inflate(R.menu.menu_exercise)
+        popup.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.delete -> simpleItemRecyclerViewAdapter.deleteRow(position)
+            }
+            false
+        }
+        popup.show()
+        return false
     }
 /*
     class SimpleItemRecyclerViewAdapter(

@@ -1,10 +1,10 @@
 package com.gyonia.exercisetracker
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.gyonia.exercisetracker.databinding.FragmentExerciseDetailBinding
 import com.gyonia.exercisetracker.model.Exercise
 
@@ -30,7 +30,8 @@ class ExerciseDetailFragment : Fragment() {
                 name = "name",
                 description = args.getString(ExerciseDetailHostActivity.KEY_DESC) ?: "description",
                 type = Exercise.ExerciseType.Reps,
-                amountDoneOnDate = HashMap<String, Int>()
+                amountDoneOnDate = HashMap<String, Int>(),
+                ownerUserId = ExerciseApplication.userId
             )
         }
     }

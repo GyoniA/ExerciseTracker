@@ -23,6 +23,58 @@ class SimpleItemRecyclerViewAdapter : ListAdapter<Exercise, SimpleItemRecyclerVi
             }
         }
     }
+
+    var itemClickListener: ExerciseItemClickListener? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(
+        RowExerciseBinding.inflate(
+            LayoutInflater.from(parent.context), parent, false))
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val exercise = this.getItem(position)
+
+        holder.exercise = exercise
+
+        holder.binding.tvName.text = exercise.name
+
+        val resource = when (exercise.type) {
+            Exercise.ExerciseType.Reps -> R.drawable.ic_reps
+            Exercise.ExerciseType.Time -> R.drawable.ic_time
+        }
+        holder.binding.ivType.setImageResource(resource)
+    }
+
+    inner class ViewHolder(val binding: RowExerciseBinding) : RecyclerView.ViewHolder(binding.root) {
+        var exercise: Exercise? = null
+
+        init {
+            itemView.setOnClickListener {
+                exercise?.let { exercise -> itemClickListener?.onItemClick(exercise) }
+            }
+
+            itemView.setOnLongClickListener { view ->
+                exercise?.let {exercise -> itemClickListener?.onItemLongClick(adapterPosition, view, exercise) }
+                true
+            }
+        }
+    }
+
+    interface ExerciseItemClickListener {
+        fun onItemClick(exercise: Exercise)
+        fun onItemLongClick(position: Int, view: View, exercise: Exercise): Boolean
+    }
+/*
+    companion object{
+        object itemCallback : DiffUtil.ItemCallback<Exercise>(){
+            override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
     
     private var exerciseList = emptyList<Exercise>()
 
@@ -79,5 +131,5 @@ class SimpleItemRecyclerViewAdapter : ListAdapter<Exercise, SimpleItemRecyclerVi
     interface ExerciseItemClickListener {
         fun onItemClick(exercise: Exercise)
         fun onItemLongClick(position: Int, view: View): Boolean
-    }
+    }*/
 }

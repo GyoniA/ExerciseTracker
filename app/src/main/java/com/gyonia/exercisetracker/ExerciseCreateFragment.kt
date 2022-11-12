@@ -11,7 +11,7 @@ import com.gyonia.exercisetracker.databinding.FragmentCreateBinding
 import com.gyonia.exercisetracker.model.Exercise
 import kotlin.random.Random
 
-class ExerciseCreateFragment : DialogFragment() {
+class ExerciseCreateFragment() : DialogFragment() {
     private lateinit var listener: ExerciseCreatedListener
     private lateinit var binding: FragmentCreateBinding
 
@@ -56,7 +56,8 @@ class ExerciseCreateFragment : DialogFragment() {
                 name = binding.etExerciseName.text.toString(),
                 description = binding.etExerciseDescription.text.toString(),
                 type = selectedType,
-                amountDoneOnDate = HashMap()
+                amountDoneOnDate = HashMap(),
+                ownerUserId = ExerciseApplication.userId
             ))
             dismiss()
         }

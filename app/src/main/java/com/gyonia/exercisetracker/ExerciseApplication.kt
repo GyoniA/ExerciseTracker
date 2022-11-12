@@ -9,6 +9,8 @@ class ExerciseApplication : Application() {
     companion object {
         lateinit var exerciseDatabase: ExerciseDatabase
             private set
+
+        var userId: Int = 0
     }
 
     override fun onCreate() {
@@ -20,5 +22,4 @@ class ExerciseApplication : Application() {
             "exercise_database"
         ).fallbackToDestructiveMigration().build()
     }
-
 }

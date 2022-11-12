@@ -6,7 +6,8 @@ data class Exercise(
     val description: String,
     val type: ExerciseType,
     //TODO store hashmap in database as a JSON string
-    val amountDoneOnDate: HashMap<String, Int>
+    val amountDoneOnDate: HashMap<String, Int>,
+    val ownerUserId: Int
 ) {
     enum class ExerciseType {
         Reps, Time

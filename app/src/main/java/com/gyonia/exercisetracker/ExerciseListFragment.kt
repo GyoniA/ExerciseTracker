@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.gyonia.exercisetracker.adapter.SimpleItemRecyclerViewAdapter
 import com.gyonia.exercisetracker.databinding.FragmentExerciseListBinding
 import com.gyonia.exercisetracker.model.Exercise
+import com.gyonia.exercisetracker.viewmodel.ExerciseViewModel
 
 /**
  * A Fragment representing a list of Pings. This fragment
@@ -27,14 +29,26 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
 
     private lateinit var simpleItemRecyclerViewAdapter: SimpleItemRecyclerViewAdapter
     private  var itemDetailFragmentContainer: View? = null
+    private lateinit var exerciseViewModel: ExerciseViewModel
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
+        exerciseViewModel.allExercises.observe(this) { exercises ->
+            simpleItemRecyclerViewAdapter.submitList(exercises)
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         setHasOptionsMenu(true)
-
         _binding = FragmentExerciseListBinding.inflate(inflater, container, false)
+        exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
+        exerciseViewModel.allExercises.observe(viewLifecycleOwner) { exercises ->
+            simpleItemRecyclerViewAdapter.submitList(exercises)
+        }
         return binding.root
 
     }
@@ -46,7 +60,6 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
         // layout configuration (layout, layout-land)
         itemDetailFragmentContainer = view.findViewById(R.id.exercise_detail_nav_container)
 
-
         /** Click Listener to trigger navigation based on if you have
          * a single pane layout or two pane layout
          */
@@ -54,14 +67,8 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
     }
 
     private fun setupRecyclerView() {
-        val demoData = mutableListOf(
-            Exercise(1, "title1", "description1", Exercise.ExerciseType.Reps, HashMap()),
-            Exercise(2, "title2", "description2", Exercise.ExerciseType.Time, HashMap()),
-            Exercise(3, "title3", "description3", Exercise.ExerciseType.Reps, HashMap())
-        )
         simpleItemRecyclerViewAdapter = SimpleItemRecyclerViewAdapter()
         simpleItemRecyclerViewAdapter.itemClickListener = this
-        simpleItemRecyclerViewAdapter.addAll(demoData)
         binding.root.findViewById<RecyclerView>(R.id.exercise_list).adapter =
             simpleItemRecyclerViewAdapter
     }
@@ -80,12 +87,15 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
         }
     }
 
-    override fun onItemLongClick(position: Int, view: View): Boolean {
-        val popup = PopupMenu(requireActivity(), view)
+    override fun onItemLongClick(position: Int, view: View, exercise: Exercise): Boolean {
+        val popup = PopupMenu(requireContext(), view)
         popup.inflate(R.menu.menu_exercise)
         popup.setOnMenuItemClickListener { item ->
             when (item.itemId) {
-                R.id.delete -> simpleItemRecyclerViewAdapter.deleteRow(position)
+                R.id.delete -> {
+                    exerciseViewModel.delete(exercise)
+                    return@setOnMenuItemClickListener true
+                }
             }
             false
         }
@@ -113,6 +123,6 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
     }
 
     override fun onExerciseCreated(exercise: Exercise) {
-        simpleItemRecyclerViewAdapter.addItem(exercise)
+        exerciseViewModel.insert(exercise)
     }
 }

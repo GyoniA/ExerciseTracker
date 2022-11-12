@@ -10,6 +10,16 @@ import kotlinx.coroutines.withContext
 
 class Repository(private val exerciseDao: ExerciseDao) {
 
+    private var username: String? = null
+
+    suspend fun login(username: String, password: String) = withContext(Dispatchers.IO) {
+        exerciseDao.login(username, password)
+    }
+
+    suspend fun logout() = withContext(Dispatchers.IO) {
+        username = null
+    }
+
     fun getAllExercises(): LiveData<List<Exercise>> {
         return exerciseDao.getAllExercises()
             .map {roomExercises ->
@@ -28,7 +38,8 @@ class Repository(private val exerciseDao: ExerciseDao) {
             name = name,
             description = description,
             type = type,
-            amountDoneOnDate = amountDoneOnDate
+            amountDoneOnDate = amountDoneOnDate,
+            ownerUserId = ownerUserId
         )
     }
 
@@ -38,7 +49,13 @@ class Repository(private val exerciseDao: ExerciseDao) {
             name = name,
             description = description,
             type = type,
-            amountDoneOnDate = amountDoneOnDate
+            amountDoneOnDate = amountDoneOnDate,
+            ownerUserId = ownerUserId
         )
+    }
+
+    suspend fun delete(exercise: Exercise) = withContext(Dispatchers.IO) {
+        val roomExercise = exerciseDao.getExerciseById(exercise.id) ?: return@withContext
+        exerciseDao.deleteExercise(roomExercise)
     }
 }

@@ -16,4 +16,12 @@ interface ExerciseDao {
 
     @Delete
     fun deleteExercise(exercise: RoomExercise)
+
+    @Query("SELECT * FROM exercise WHERE id == :id")
+    fun getExerciseById(id: Int?): RoomExercise?
+
+    @Query("SELECT CASE WHEN EXISTS (SELECT * FROM user WHERE username == :username AND password == :password)" +
+            "THEN CAST(1 AS BIT)" +
+            "ELSE CAST(0 AS BIT) END")
+    fun login(username: String, password: String): Boolean
 }

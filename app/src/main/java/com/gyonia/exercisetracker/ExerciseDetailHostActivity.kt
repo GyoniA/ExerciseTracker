@@ -15,11 +15,12 @@ class ExerciseDetailHostActivity : AppCompatActivity() {
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private lateinit var binding: ActivityExerciseDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = ActivityExerciseDetailBinding.inflate(layoutInflater)
+        binding = ActivityExerciseDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment =

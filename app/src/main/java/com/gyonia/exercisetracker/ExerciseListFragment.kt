@@ -1,9 +1,7 @@
 package com.gyonia.exercisetracker
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
@@ -22,7 +20,7 @@ import com.gyonia.exercisetracker.model.Exercise
  * item details side-by-side using two vertical panes.
  */
 
-class ExerciseListFragment : Fragment(), SimpleItemRecyclerViewAdapter.ExerciseItemClickListener {
+class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedListener, SimpleItemRecyclerViewAdapter.ExerciseItemClickListener {
 
     private var _binding: FragmentExerciseListBinding? = null
     private val binding get() = _binding!!
@@ -34,6 +32,7 @@ class ExerciseListFragment : Fragment(), SimpleItemRecyclerViewAdapter.ExerciseI
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        setHasOptionsMenu(true)
 
         _binding = FragmentExerciseListBinding.inflate(inflater, container, false)
         return binding.root
@@ -92,6 +91,20 @@ class ExerciseListFragment : Fragment(), SimpleItemRecyclerViewAdapter.ExerciseI
         }
         popup.show()
         return false
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list,menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.itemCreateExercise) {
+            val exerciseCreateFragment = ExerciseCreateFragment()
+            exerciseCreateFragment.setTargetFragment(this,1)
+            fragmentManager?.let { exerciseCreateFragment.show(it, "TAG") }
+        }
+        return super.onOptionsItemSelected(item)
     }
 /*
     class SimpleItemRecyclerViewAdapter(
@@ -191,5 +204,9 @@ class ExerciseListFragment : Fragment(), SimpleItemRecyclerViewAdapter.ExerciseI
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onExerciseCreated(exercise: Exercise) {
+        simpleItemRecyclerViewAdapter.addItem(exercise)
     }
 }

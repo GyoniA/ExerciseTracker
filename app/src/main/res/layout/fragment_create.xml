@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:stretchColumns="1">
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_column="1"
+            android:gravity="end"
+            android:text="@string/lblExerciseName" />
+
+        <EditText
+            android:id="@+id/etExerciseName"
+            android:width="200dp" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_column="1"
+            android:gravity="end"
+            android:text="@string/lblExerciseType" />
+
+        <Spinner
+            android:id="@+id/spnrExerciseType"
+            android:width="200dp" />
+    </TableRow>
+
+    <TableRow>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_column="1"
+            android:gravity="end"
+            android:text="@string/lblExerciseDescription" />
+
+        <EditText
+            android:id="@+id/etExerciseDescription"
+            android:width="200dp"
+            android:text="" />
+
+    </TableRow>
+
+    <TableRow>
+
+        <Button
+            android:id="@+id/btnCreateExercise"
+            android:layout_width="wrap_content"
+            android:layout_column="1"
+            android:gravity="end"
+            android:text="@string/btnOk"
+            style="?android:attr/buttonBarButtonStyle" />
+
+        <Button
+            android:id="@+id/btnCancelCreateExercise"
+            android:layout_width="wrap_content"
+            android:gravity="start"
+            android:text="@string/btnCancel"
+            style="?android:attr/buttonBarButtonStyle" />
+
+    </TableRow>
+
+</TableLayout>

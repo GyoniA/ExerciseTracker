@@ -3,4 +3,12 @@
     <string name="title_activity_exercise_detail_host">ExerciseDetailHostActivity</string>
     <string name="title_exercise_list">Exercises</string>
     <string name="title_exercise_detail">Exercise Detail</string>
+    <string name="lblExerciseName">Name</string>
+    <string name="lblExerciseType">Type</string>
+    <string name="lblExerciseDescription">Description</string>
+    <string name="btnOk">Create</string>
+    <string name="btnCancel">Cancel</string>
+    <string name="delete">Delete</string>
+    <string name="back">Back</string>
+    <string name="itemCreateExercise">Create</string>
 </resources>

@@ -3,14 +3,28 @@ package com.gyonia.exercisetracker.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gyonia.exercisetracker.R
 import com.gyonia.exercisetracker.databinding.RowExerciseBinding
 import com.gyonia.exercisetracker.model.Exercise
 
-class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerViewAdapter.ViewHolder>() {
+class SimpleItemRecyclerViewAdapter : ListAdapter<Exercise, SimpleItemRecyclerViewAdapter.ViewHolder>(itemCallback) {
 
-    private val exerciseList = mutableListOf<Exercise>()
+    companion object{
+        object itemCallback : DiffUtil.ItemCallback<Exercise>(){
+            override fun areItemsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+                return oldItem.id == newItem.id
+            }
+
+            override fun areContentsTheSame(oldItem: Exercise, newItem: Exercise): Boolean {
+                return oldItem == newItem
+            }
+        }
+    }
+    
+    private var exerciseList = emptyList<Exercise>()
 
     var itemClickListener: ExerciseItemClickListener? = null
 
@@ -33,23 +47,19 @@ class SimpleItemRecyclerViewAdapter : RecyclerView.Adapter<SimpleItemRecyclerVie
     }
 
     fun addItem(exercise: Exercise) {
-        val size = exerciseList.size
-        exerciseList.add(exercise)
-        notifyItemInserted(size)
+        exerciseList += exercise
+        submitList(exerciseList)
     }
 
     fun addAll(exercises: List<Exercise>) {
-        val size = exerciseList.size
         exerciseList += exercises
-        notifyItemRangeInserted(size, exercises.size)
+        submitList(exerciseList)
     }
 
     fun deleteRow(position: Int) {
-        exerciseList.removeAt(position)
-        notifyItemRemoved(position)
+        exerciseList = exerciseList.filterIndexed { index, _ -> index != position }
+        submitList(exerciseList)
     }
-
-    override fun getItemCount() = exerciseList.size
 
     inner class ViewHolder(val binding: RowExerciseBinding) : RecyclerView.ViewHolder(binding.root) {
         var exercise: Exercise? = null

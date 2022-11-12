@@ -5,6 +5,6 @@ package com.gyonia.exercisetracker.ui.login
  */
 data class LoggedInUserView(
     val displayName: String,
-    val userId: Int
+    val userId: String
     //... other data fields that may be accessible to the UI
 )

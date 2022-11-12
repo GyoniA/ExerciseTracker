@@ -10,7 +10,7 @@ class ExerciseApplication : Application() {
         lateinit var exerciseDatabase: ExerciseDatabase
             private set
 
-        var userId: Int = 0
+        var userId: String = ""
     }
 
     override fun onCreate() {

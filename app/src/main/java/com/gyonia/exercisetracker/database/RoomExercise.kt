@@ -17,5 +17,5 @@ data class RoomExercise(
     @TypeConverters(ExerciseTypeConverter.MapTypeConverter::class)
     val amountDoneOnDate: HashMap<String, Int>,
 
-    val ownerUserId: Int
+    val ownerUserId: String
 )

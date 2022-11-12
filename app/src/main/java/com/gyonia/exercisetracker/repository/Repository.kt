@@ -12,10 +12,6 @@ class Repository(private val exerciseDao: ExerciseDao) {
 
     private var username: String? = null
 
-    suspend fun login(username: String, password: String) = withContext(Dispatchers.IO) {
-        exerciseDao.login(username, password)
-    }
-
     suspend fun logout() = withContext(Dispatchers.IO) {
         username = null
     }

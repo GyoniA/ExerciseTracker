@@ -47,6 +47,11 @@ class ExerciseDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.exerciseDetail.text = selectedExercise?.description
+        if (selectedExercise?.type == Exercise.ExerciseType.Reps) {
+            binding.inputAmountDone?.hint = getString(R.string.reps_done)
+        } else {
+            binding.inputAmountDone?.hint = getString(R.string.time_done)
+        }
     }
 
     /**

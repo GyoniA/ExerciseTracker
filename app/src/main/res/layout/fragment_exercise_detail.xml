@@ -39,17 +39,43 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <TextView
-            android:id="@+id/exercise_detail"
-            style="?android:attr/textAppearanceLarge"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="@dimen/container_horizontal_margin"
-            android:paddingTop="16dp"
-            android:paddingEnd="@dimen/container_horizontal_margin"
-            android:paddingBottom="16dp"
-            android:textIsSelectable="true"
-            tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment" />
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/exercise_detail"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                android:textIsSelectable="true"
+                tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment" />
+
+            <EditText
+                android:id="@+id/input_amount_done"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/container_horizontal_margin"
+                android:paddingTop="16dp"
+                android:paddingEnd="@dimen/container_horizontal_margin"
+                android:paddingBottom="16dp"
+                tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment"
+                android:hint="@string/reps_done"
+                android:autofillHints="text" />
+            <DatePicker
+                android:id="@+id/input_date"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner" />
+        </LinearLayout>
+
 
     </androidx.core.widget.NestedScrollView>
 

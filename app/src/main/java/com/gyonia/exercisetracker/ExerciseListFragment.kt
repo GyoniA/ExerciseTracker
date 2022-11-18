@@ -75,9 +75,9 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
 
     override fun onItemClick(exercise: Exercise) {
         val bundle = Bundle()
-        bundle.putString(
-            ExerciseDetailHostActivity.KEY_DESC,
-            exercise.description
+        bundle.putInt(
+            ExerciseDetailHostActivity.KEY_ID,
+            exercise.id
         )
         if (itemDetailFragmentContainer != null) {
             itemDetailFragmentContainer!!.findNavController()

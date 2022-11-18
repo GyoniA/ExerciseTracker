@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.gyonia.exercisetracker.database.RoomExercise
 import com.gyonia.exercisetracker.databinding.FragmentExerciseDetailBinding
 import com.gyonia.exercisetracker.model.Exercise
+import kotlin.concurrent.thread
 
 /**
  * A fragment representing a single Exercise detail screen.
@@ -16,6 +18,17 @@ import com.gyonia.exercisetracker.model.Exercise
  */
 class ExerciseDetailFragment : Fragment() {
 
+    private fun RoomExercise.toDomainModel(): Exercise {
+        return Exercise(
+            id = id,
+            name = name,
+            description = description,
+            type = type,
+            amountDoneOnDate = amountDoneOnDate,
+            ownerUserId = ownerUserId
+        )
+    }
+
     private var selectedExercise: Exercise? = null
 
     private lateinit var _binding: FragmentExerciseDetailBinding
@@ -24,15 +37,10 @@ class ExerciseDetailFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        arguments?.let { args ->
-            selectedExercise = Exercise(
-                id = 0,
-                name = "name",
-                description = args.getString(ExerciseDetailHostActivity.KEY_DESC) ?: "description",
-                type = Exercise.ExerciseType.Reps,
-                amountDoneOnDate = HashMap<String, Int>(),
-                ownerUserId = ExerciseApplication.userId
-            )
+        val id = arguments?.getInt(ExerciseDetailHostActivity.KEY_ID) ?: 0
+
+        thread {
+            selectedExercise = ExerciseApplication.exerciseDatabase.exerciseDao().getExerciseById(id)?.toDomainModel()
         }
     }
 
@@ -48,9 +56,15 @@ class ExerciseDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         binding.exerciseDetail.text = selectedExercise?.description
         if (selectedExercise?.type == Exercise.ExerciseType.Reps) {
-            binding.inputAmountDone?.hint = getString(R.string.reps_done)
+            binding.amountDoneTitle?.text = getText(R.string.reps_done)
         } else {
-            binding.inputAmountDone?.hint = getString(R.string.time_done)
+            binding.amountDoneTitle?.text = getText(R.string.time_done)
+        }
+        binding.submitButton?.setOnClickListener {
+            selectedExercise?.let { exercise ->
+                exercise.amountDoneOnDate[binding.inputDate.toString()] =
+                    binding.inputAmountDone?.text.toString().toInt()
+            }
         }
     }
 

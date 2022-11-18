@@ -39,42 +39,82 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.15" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guideline3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintGuide_percent="0.85" />
 
             <TextView
                 android:id="@+id/exercise_detail"
                 style="?android:attr/textAppearanceLarge"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:paddingStart="@dimen/container_horizontal_margin"
                 android:paddingTop="16dp"
                 android:paddingEnd="@dimen/container_horizontal_margin"
                 android:paddingBottom="16dp"
                 android:textIsSelectable="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment" />
+
+            <TextView
+                android:id="@+id/amount_done_title"
+                style="?android:attr/textAppearanceLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/reps_done"
+                app:layout_constraintBottom_toBottomOf="@+id/input_amount_done"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/exercise_detail"
+                tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment"/>
 
             <EditText
                 android:id="@+id/input_amount_done"
                 style="?android:attr/textAppearanceLarge"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingStart="@dimen/container_horizontal_margin"
-                android:paddingTop="16dp"
-                android:paddingEnd="@dimen/container_horizontal_margin"
-                android:paddingBottom="16dp"
-                tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment"
-                android:hint="@string/reps_done"
-                android:autofillHints="text" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:autofillHints="text"
+                android:digits="0123456789"
+                android:inputType="number"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toEndOf="@+id/amount_done_title"
+                app:layout_constraintTop_toBottomOf="@+id/exercise_detail"
+                tools:context="com.gyonia.exercisetracker.ExerciseDetailFragment" />
+
             <DatePicker
                 android:id="@+id/input_date"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="160dp"
                 android:calendarViewShown="false"
-                android:datePickerMode="spinner" />
-        </LinearLayout>
+                android:datePickerMode="spinner"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/input_amount_done" />
+
+            <Button
+                android:id="@+id/submit_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                app:layout_constraintStart_toStartOf="@+id/guideline2"
+                app:layout_constraintTop_toBottomOf="@+id/input_date" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
 
     </androidx.core.widget.NestedScrollView>
@@ -89,5 +129,6 @@
         app:layout_anchor="@+id/exercise_detail_scroll_view"
         app:layout_anchorGravity="top|end"
         app:srcCompat="@android:drawable/stat_notify_chat" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

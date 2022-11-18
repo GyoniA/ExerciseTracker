@@ -13,7 +13,7 @@ import com.gyonia.exercisetracker.databinding.ActivityExerciseDetailBinding
 
 class ExerciseDetailHostActivity : AppCompatActivity() {
     companion object {
-        const val KEY_DESC = "KEY_DESC"
+        const val KEY_ID = "KEY_ID"
     }
 
     private lateinit var appBarConfiguration: AppBarConfiguration

@@ -56,6 +56,53 @@ class ExerciseDetailFragment : Fragment() {
         return binding.root
     }
 
+    fun updateChart() {
+        val chart = binding.cubiclinechart as ValueLineChart
+
+
+        val series = ValueLineSeries()
+        series.color = 0xFFFE7A70.toInt()
+/*
+        selectedExercise?.amountDoneOnDate?.let {
+            it["2022.1.22"] = 2
+            it["2022.2.12"] = 3
+            it["2022.3.31"] = 5
+            it["2022.4.8"] = 3
+            it["2022.5.22"] = 5
+            it["2022.6.32"] = 12
+            it["2022.6.32"] = 12
+            it["2022.6.32"] = 12
+            it["2022.7.15"] = 1
+            it["2022.8.22"] = 2
+            it["2022.9.12"] = 3
+            it["2022.10.31"] = 5
+            it["2022.11.8"] = 3
+        }*/
+
+        var valuesForDates = selectedExercise?.amountDoneOnDate?.toList()
+
+        valuesForDates = valuesForDates?.sortedBy { it.first }
+
+        valuesForDates?.forEach {
+            val dateStrings = it.first.split(".")
+            val dateinFormat = dateStrings[1] + "/" + dateStrings[2]
+            series.addPoint(ValueLinePoint(dateinFormat, it.second.toFloat()))
+        }
+        /*
+        series.addPoint(ValueLinePoint("01.22", 2.4f))
+        series.addPoint(ValueLinePoint("02.12", 3.4f))
+        series.addPoint(ValueLinePoint("03.31", .4f))
+        series.addPoint(ValueLinePoint("04.08", 1.2f))
+        series.addPoint(ValueLinePoint("05.22", 2.6f))
+        series.addPoint(ValueLinePoint("06.32", 1.0f))
+        series.addPoint(ValueLinePoint("07.15", 3.5f))*/
+
+        chart.clearChart()
+
+        chart.addSeries(series)
+        chart.startAnimation()
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.exerciseDetail.text = selectedExercise?.description
@@ -65,28 +112,15 @@ class ExerciseDetailFragment : Fragment() {
             binding.amountDoneTitle?.text = getText(R.string.time_done)
         }
         binding.submitButton?.setOnClickListener {
+            val date = binding.inputDate?.year.toString() + "." + binding.inputDate?.month.toString() + "." + binding.inputDate?.dayOfMonth.toString()
             selectedExercise?.let { exercise ->
                 exercise.amountDoneOnDate[binding.inputDate.toString()] =
                     binding.inputAmountDone?.text.toString().toInt()
             }
+            updateChart()
         }
-
-        val mCubicValueLineChart = binding.cubiclinechart as ValueLineChart
-
-        val series = ValueLineSeries()
-        series.color = -0xF49E6C
-
-
-        series.addPoint(ValueLinePoint("01.22", 2.4f))
-        series.addPoint(ValueLinePoint("02.12", 3.4f))
-        series.addPoint(ValueLinePoint("03.31", .4f))
-        series.addPoint(ValueLinePoint("04.08", 1.2f))
-        series.addPoint(ValueLinePoint("05.22", 2.6f))
-        series.addPoint(ValueLinePoint("06.32", 1.0f))
-        series.addPoint(ValueLinePoint("07.15", 3.5f))
-
-        mCubicValueLineChart.addSeries(series)
-        mCubicValueLineChart.startAnimation()
+        selectedExercise?.amountDoneOnDate?.clear()
+        updateChart()
     }
 
     /**

@@ -2,7 +2,7 @@
     <string name="app_name">Exercise Tracker</string>
     <string name="title_activity_exercise_detail_host">ExerciseDetailHostActivity</string>
     <string name="title_exercise_list">Exercises</string>
-    <string name="title_exercise_detail">Exercise Detail</string>
+    <string name="title_exercise_detail">Details</string>
     <string name="lblExerciseName">Name</string>
     <string name="lblExerciseType">Type</string>
     <string name="lblExerciseDescription">Description</string>
@@ -23,4 +23,5 @@
     <string name="reps_done">Reps done:</string>
     <string name="time_done">Time done(seconds):</string>
     <string name="submit">Submit</string>
+    <string name="exercises">Exercises</string>
 </resources>

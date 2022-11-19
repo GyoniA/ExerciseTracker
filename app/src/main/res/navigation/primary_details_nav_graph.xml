@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/exercise_list_fragment"
         android:name="com.gyonia.exercisetracker.ExerciseListFragment"
-        android:label="ExerciseListFragment">
+        android:label="@string/exercises">
         <action
             android:id="@+id/show_exercise_detail"
             app:destination="@id/exercise_detail_fragment" />
@@ -16,7 +16,7 @@
     <fragment
         android:id="@+id/exercise_detail_fragment"
         android:name="com.gyonia.exercisetracker.ExerciseDetailFragment"
-        android:label="exercise_detail"
+        android:label="@string/title_exercise_detail"
         tools:layout="@layout/fragment_exercise_detail">
         <argument
             android:name="item_id"

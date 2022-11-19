@@ -85,17 +85,9 @@ class ExerciseDetailFragment : Fragment() {
 
         valuesForDates?.forEach {
             val dateStrings = it.first.split(".")
-            val dateinFormat = dateStrings[1] + "/" + dateStrings[2]
-            series.addPoint(ValueLinePoint(dateinFormat, it.second.toFloat()))
+            val dateInFormat = dateStrings[1] + "/" + dateStrings[2]
+            series.addPoint(ValueLinePoint(dateInFormat, it.second.toFloat()))
         }
-        /*
-        series.addPoint(ValueLinePoint("01.22", 2.4f))
-        series.addPoint(ValueLinePoint("02.12", 3.4f))
-        series.addPoint(ValueLinePoint("03.31", .4f))
-        series.addPoint(ValueLinePoint("04.08", 1.2f))
-        series.addPoint(ValueLinePoint("05.22", 2.6f))
-        series.addPoint(ValueLinePoint("06.32", 1.0f))
-        series.addPoint(ValueLinePoint("07.15", 3.5f))*/
 
         chart.clearChart()
 
@@ -112,9 +104,9 @@ class ExerciseDetailFragment : Fragment() {
             binding.amountDoneTitle?.text = getText(R.string.time_done)
         }
         binding.submitButton?.setOnClickListener {
-            val date = binding.inputDate?.year.toString() + "." + binding.inputDate?.month.toString() + "." + binding.inputDate?.dayOfMonth.toString()
+            val date = binding.inputDate?.year.toString() + "." + (binding.inputDate?.month?.toInt()?.plus(1)).toString() + "." + binding.inputDate?.dayOfMonth.toString()
             selectedExercise?.let { exercise ->
-                exercise.amountDoneOnDate[binding.inputDate.toString()] =
+                exercise.amountDoneOnDate[date] =
                     binding.inputAmountDone?.text.toString().toInt()
             }
             updateChart()

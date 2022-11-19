@@ -2,4 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/itemCreateExercise"
         android:title="@string/itemCreateExercise"/>
+    <item
+        android:id="@+id/stayLoggedIn"
+        android:title="@string/stay_logged_in"
+        android:checkable="true"/>
 </menu>

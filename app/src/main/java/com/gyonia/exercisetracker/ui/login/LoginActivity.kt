@@ -1,6 +1,7 @@
 package com.gyonia.exercisetracker.ui.login
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -15,6 +16,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gyonia.exercisetracker.ExerciseApplication
 import com.gyonia.exercisetracker.ExerciseDetailHostActivity
+import com.gyonia.exercisetracker.R
 import com.gyonia.exercisetracker.databinding.ActivityLoginBinding
 
 
@@ -28,6 +30,21 @@ class LoginActivity : AppCompatActivity() {
 
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val sharedPref = getSharedPreferences(getString(R.string.settings_shared), Context.MODE_PRIVATE)
+        val stayLoggedIn = sharedPref.getBoolean(getString(R.string.stay_logged_in), false)
+
+        if (stayLoggedIn) {
+            val userID = sharedPref.getString(getString(R.string.user_id), null)
+
+            if (userID != null) {
+                ExerciseApplication.userId = userID
+                val toDetailHostIntent = Intent(this, ExerciseDetailHostActivity::class.java)
+                this.startActivity(toDetailHostIntent)
+            }
+            val intent = Intent(this, ExerciseDetailHostActivity::class.java)
+            startActivity(intent)
+        }
 
         val username = binding.username
         val password = binding.password
@@ -103,7 +120,6 @@ class LoginActivity : AppCompatActivity() {
     private fun updateUiWithUser(model: LoggedInUserView) {
         ExerciseApplication.userId = model.userId
         val toDetailHostIntent = Intent(this, ExerciseDetailHostActivity::class.java)
-        toDetailHostIntent.putExtra("username", model.displayName) //Optional parameters
         this.startActivity(toDetailHostIntent)
     }
 

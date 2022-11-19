@@ -1,7 +1,6 @@
 package com.gyonia.exercisetracker
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -18,19 +17,9 @@ class ExerciseDetailHostActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityExerciseDetailBinding
-    private lateinit var username: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        val welcome = getString(R.string.welcome)
-        username = intent.getStringExtra("username").toString()
-        Toast.makeText(
-            applicationContext,
-            "$welcome $username",
-            Toast.LENGTH_LONG
-        ).show()
-
 
         binding = ActivityExerciseDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)

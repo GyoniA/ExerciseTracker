@@ -24,4 +24,8 @@
     <string name="time_done">Time done(seconds):</string>
     <string name="submit">Submit</string>
     <string name="exercises">Exercises</string>
+    <string name="stay_logged_in">Stay Logged In</string>
+    <string name="user_id">UserId</string>
+    <string name="stay_logged_in_check">StayLoggedIn</string>
+    <string name="settings_shared">Settings</string>
 </resources>

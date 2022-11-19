@@ -8,7 +8,11 @@ import androidx.fragment.app.Fragment
 import com.gyonia.exercisetracker.database.RoomExercise
 import com.gyonia.exercisetracker.databinding.FragmentExerciseDetailBinding
 import com.gyonia.exercisetracker.model.Exercise
+import org.eazegraph.lib.charts.ValueLineChart
+import org.eazegraph.lib.models.ValueLinePoint
+import org.eazegraph.lib.models.ValueLineSeries
 import kotlin.concurrent.thread
+
 
 /**
  * A fragment representing a single Exercise detail screen.
@@ -66,6 +70,23 @@ class ExerciseDetailFragment : Fragment() {
                     binding.inputAmountDone?.text.toString().toInt()
             }
         }
+
+        val mCubicValueLineChart = binding.cubiclinechart as ValueLineChart
+
+        val series = ValueLineSeries()
+        series.color = -0xF49E6C
+
+
+        series.addPoint(ValueLinePoint("01.22", 2.4f))
+        series.addPoint(ValueLinePoint("02.12", 3.4f))
+        series.addPoint(ValueLinePoint("03.31", .4f))
+        series.addPoint(ValueLinePoint("04.08", 1.2f))
+        series.addPoint(ValueLinePoint("05.22", 2.6f))
+        series.addPoint(ValueLinePoint("06.32", 1.0f))
+        series.addPoint(ValueLinePoint("07.15", 3.5f))
+
+        mCubicValueLineChart.addSeries(series)
+        mCubicValueLineChart.startAnimation()
     }
 
     /**

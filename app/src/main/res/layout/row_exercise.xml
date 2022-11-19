@@ -16,8 +16,10 @@
         android:id="@+id/tvName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toRightOf="@+id/ivType"
+        android:textAlignment="center"
         android:textSize="16sp"
-        tools:text="Name"/>
+        app:layout_constraintBottom_toBottomOf="@id/ivType"
+        app:layout_constraintLeft_toRightOf="@+id/ivType"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Name" />
 </androidx.constraintlayout.widget.ConstraintLayout>

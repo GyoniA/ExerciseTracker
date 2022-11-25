@@ -3,7 +3,6 @@
     <item android:id="@+id/itemCreateExercise"
         android:title="@string/itemCreateExercise"/>
     <item
-        android:id="@+id/stayLoggedIn"
-        android:title="@string/stay_logged_in"
-        android:checkable="true"/>
+        android:id="@+id/settings"
+        android:title="@string/settings"/>
 </menu>

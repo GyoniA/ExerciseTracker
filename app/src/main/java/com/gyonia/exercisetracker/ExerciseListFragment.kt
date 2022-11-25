@@ -1,6 +1,6 @@
 package com.gyonia.exercisetracker
 
-import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.PopupMenu
@@ -32,7 +32,6 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
     private lateinit var simpleItemRecyclerViewAdapter: SimpleItemRecyclerViewAdapter
     private  var itemDetailFragmentContainer: View? = null
     private lateinit var exerciseViewModel: ExerciseViewModel
-    private var stayLoggedIn = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,10 +107,6 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_list,menu)
-        //TODO check why this is not working
-        val sharedPref = activity?.getSharedPreferences(getString(R.string.settings_shared), Context.MODE_PRIVATE)
-        stayLoggedIn = (sharedPref?.getBoolean(getString(R.string.stay_logged_in), false) == true)
-        menu.findItem(R.id.stayLoggedIn).isChecked = stayLoggedIn
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -120,15 +115,9 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
             val exerciseCreateFragment = ExerciseCreateFragment()
             exerciseCreateFragment.setTargetFragment(this,1)
             fragmentManager?.let { exerciseCreateFragment.show(it, "TAG") }
-        } else  if (item.itemId == R.id.stayLoggedIn) {
-            //TODO save to shared preferences
-            val sharedPref = activity?.getSharedPreferences(getString(R.string.settings_shared), Context.MODE_PRIVATE) ?: return super.onOptionsItemSelected(item)
-            item.isChecked = !item.isChecked
-            with (sharedPref.edit()) {
-                putBoolean(getString(R.string.stay_logged_in_check), item.isChecked)
-                putString(getString(R.string.user_id), ExerciseApplication.userId)
-                apply()
-            }
+        } else  if (item.itemId == R.id.settings) {
+            val intentSettings = Intent(context, SettingsActivity::class.java)
+            startActivity(intentSettings)
         }
         return super.onOptionsItemSelected(item)
     }

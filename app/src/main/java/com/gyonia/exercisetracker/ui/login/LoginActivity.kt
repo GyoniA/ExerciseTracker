@@ -1,7 +1,6 @@
 package com.gyonia.exercisetracker.ui.login
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
@@ -14,9 +13,10 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.preference.PreferenceManager
 import com.gyonia.exercisetracker.ExerciseApplication
 import com.gyonia.exercisetracker.ExerciseDetailHostActivity
-import com.gyonia.exercisetracker.R
+import com.gyonia.exercisetracker.SettingsActivity
 import com.gyonia.exercisetracker.databinding.ActivityLoginBinding
 
 
@@ -31,19 +31,16 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPref = getSharedPreferences(getString(R.string.settings_shared), Context.MODE_PRIVATE)
-        val stayLoggedIn = sharedPref.getBoolean(getString(R.string.stay_logged_in), false)
+        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val stayLoggedIn = SettingsActivity.getAutoLogin(sharedPreferences, this)
 
         if (stayLoggedIn) {
-            val userID = sharedPref.getString(getString(R.string.user_id), null)
-
-            if (userID != null) {
-                ExerciseApplication.userId = userID
-                val toDetailHostIntent = Intent(this, ExerciseDetailHostActivity::class.java)
-                this.startActivity(toDetailHostIntent)
+            SettingsActivity.getUserId(sharedPreferences, this).let {
+                ExerciseApplication.userId = it
+                val intent = Intent(this, ExerciseDetailHostActivity::class.java)
+                startActivity(intent)
+                finish()
             }
-            val intent = Intent(this, ExerciseDetailHostActivity::class.java)
-            startActivity(intent)
         }
 
         val username = binding.username

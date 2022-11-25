@@ -23,7 +23,6 @@ class ExerciseDetailHostActivity : AppCompatActivity() {
 
         binding = ActivityExerciseDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_exercise_detail) as NavHostFragment
         val navController = navHostFragment.navController

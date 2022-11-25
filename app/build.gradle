@@ -71,4 +71,7 @@ dependencies {
     //Charts
     implementation 'com.github.blackfizz:eazegraph:1.2.5l@aar'
     implementation 'com.nineoldandroids:library:2.4.0'
+
+    //Preferences
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 }

@@ -65,11 +65,6 @@ class ExerciseCreateFragment() : DialogFragment() {
         binding.btnCancelCreateExercise.setOnClickListener {
             dismiss()
         }
-
-    }
-
-    private fun showDatePickerDialog() {
-        //TODO
     }
 
     interface ExerciseCreatedListener {

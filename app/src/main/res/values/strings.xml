@@ -19,7 +19,7 @@
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">"Login failed"</string>
+    <string name="login_failed">"Login failed: wrong password"</string>
     <string name="reps_done">Reps done:</string>
     <string name="time_done">Time done(seconds):</string>
     <string name="submit">Submit</string>

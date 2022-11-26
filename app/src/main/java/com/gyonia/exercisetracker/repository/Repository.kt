@@ -12,19 +12,11 @@ import kotlinx.coroutines.withContext
 class Repository(private val exerciseDao: ExerciseDao) {
 
     fun getAllExercises(): LiveData<List<Exercise>> {
-        /*
-        return exerciseDao.getAllExercises()
-            .map {roomExercises ->
-                roomExercises.map {roomExercise ->
-                    roomExercise.toDomainModel() }
-            }*/
-        //TODO switch to this one once login works
         return exerciseDao.getExercisesByOwnerUserId(ExerciseApplication.userId)
             .map {roomExercises ->
                 roomExercises.map {roomExercise ->
                     roomExercise.toDomainModel() }
             }
-
     }
 
     suspend fun insert(exercise: Exercise) = withContext(Dispatchers.IO) {

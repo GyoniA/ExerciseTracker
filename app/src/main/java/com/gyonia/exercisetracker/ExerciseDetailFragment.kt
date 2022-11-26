@@ -62,22 +62,6 @@ class ExerciseDetailFragment () : Fragment() {
 
         val series = ValueLineSeries()
         series.color = 0xFFFE7A70.toInt()
-/*
-        selectedExercise?.amountDoneOnDate?.let {
-            it["2022.1.22"] = 2
-            it["2022.2.12"] = 3
-            it["2022.3.31"] = 5
-            it["2022.4.8"] = 3
-            it["2022.5.22"] = 5
-            it["2022.6.32"] = 12
-            it["2022.6.32"] = 12
-            it["2022.6.32"] = 12
-            it["2022.7.15"] = 1
-            it["2022.8.22"] = 2
-            it["2022.9.12"] = 3
-            it["2022.10.31"] = 5
-            it["2022.11.8"] = 3
-        }*/
 
         var valuesForDates = selectedExercise?.amountDoneOnDate?.toList()
 
@@ -114,65 +98,6 @@ class ExerciseDetailFragment () : Fragment() {
             }
             updateChart()
         }
-        //selectedExercise?.amountDoneOnDate?.clear()
         updateChart()
     }
-
-    /**
-     * The placeholder content this fragment is presenting.
-     */
-    /*
-    private var item: PlaceholderContent.PlaceholderItem? = null
-
-    lateinit var itemDetailTextView: TextView
-    private var toolbarLayout: CollapsingToolbarLayout? = null
-
-    private val dragListener = View.OnDragListener { v, event ->
-        if (event.action == DragEvent.ACTION_DROP) {
-            val clipDataItem: ClipData.Item = event.clipData.getItemAt(0)
-            val dragData = clipDataItem.text
-            selectedExercise = PlaceholderContent.ITEM_MAP[dragData]
-            updateContent()
-        }
-        true
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentExerciseDetailBinding.inflate(inflater, container, false)
-        val rootView = binding.root
-
-        toolbarLayout = binding.toolbarLayout
-        itemDetailTextView = binding.exerciseDetail
-
-        updateContent()
-        rootView.setOnDragListener(dragListener)
-
-        return rootView
-    }
-
-    private fun updateContent() {
-        toolbarLayout?.title = item?.content
-
-        // Show the placeholder content as text in a TextView.
-        item?.let {
-            itemDetailTextView.text = it.details
-        }
-    }
-
-    companion object {
-        /**
-         * The fragment argument representing the item ID that this fragment
-         * represents.
-         */
-        const val ARG_ITEM_ID = "item_id"
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }*/
 }

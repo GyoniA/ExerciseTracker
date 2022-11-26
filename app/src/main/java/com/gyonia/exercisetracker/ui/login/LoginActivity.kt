@@ -2,6 +2,7 @@ package com.gyonia.exercisetracker.ui.login
 
 import android.app.Activity
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -24,6 +25,7 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var loginViewModel: LoginViewModel
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var preferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,11 +33,11 @@ class LoginActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this)
-        val stayLoggedIn = SettingsActivity.getAutoLogin(sharedPreferences, this)
+        preferences = PreferenceManager.getDefaultSharedPreferences(this)
+        val stayLoggedIn = SettingsActivity.getAutoLogin(preferences, this)
 
         if (stayLoggedIn) {
-            SettingsActivity.getUserId(sharedPreferences, this).let {
+            SettingsActivity.getUserId(preferences, this).let {
                 ExerciseApplication.userId = it
                 val intent = Intent(this, ExerciseDetailHostActivity::class.java)
                 startActivity(intent)
@@ -48,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
         val login = binding.login
         val loading = binding.loading
 
-        loginViewModel = ViewModelProvider(this, LoginViewModelFactory())
+        loginViewModel = ViewModelProvider(this, LoginViewModelFactory(preferences))
             .get(LoginViewModel::class.java)
 
         loginViewModel.loginFormState.observe(this@LoginActivity, Observer {

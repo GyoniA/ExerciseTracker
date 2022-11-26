@@ -1,41 +1,48 @@
 package com.gyonia.exercisetracker.data
 
+import android.content.SharedPreferences
 import com.gyonia.exercisetracker.ExerciseApplication
 import com.gyonia.exercisetracker.data.model.LoggedInUser
-import com.gyonia.exercisetracker.database.RoomLogin
-import com.gyonia.exercisetracker.repository.LoginRepo
-import kotlinx.coroutines.runBlocking
 import java.io.IOException
+
 
 /**
  * Class that handles authentication w/ login credentials and retrieves user information.
  */
-class LoginDataSource {
+class LoginDataSource (private val preferences: SharedPreferences){
 
     fun login(username: String, password: String): Result<LoggedInUser> {
         try {
-            val dao = ExerciseApplication.loginDatabase.loginDao()
-            val repo = LoginRepo(dao)
-            if(repo.checkUsernameExists(username)) {
-                val id = repo.getIdFromLoginInfo(username, password)
-                if(id != null) {
-                    ExerciseApplication.userId = id.toString()
-                    return Result.Success(LoggedInUser(id.toString(), username))
+            if(checkUsernameExists(username)) {
+                if(checkPassword(username, password)) {
+                    ExerciseApplication.userId = username
+                    return Result.Success(LoggedInUser(username, username))
+                } else {
+                    return Result.Error(IOException("Error logging in wrong password"))
                 }
             } else {
-                runBlocking { repo.insertLogin(RoomLogin(0, username, password)) }
-                val id = repo.getIdFromLoginInfo(username, password)
-                if(id != null) {
-                    ExerciseApplication.userId = id.toString()
-                    return Result.Success(LoggedInUser(id.toString(), username))
-                } else  {
-                    return Result.Error(IOException("Error logging in with new credentials"))
-                }
+                addLogin(username, password)
+                ExerciseApplication.userId = username
+                return Result.Success(LoggedInUser(username, username))
             }
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }
-        return Result.Error(IOException("Error logging in"))
+    }
+
+    private fun addLogin(username: String, password: String) {
+        preferences.edit().putString(username, password).apply()
+    }
+
+    private fun checkPassword(username: String, password: String) : Boolean {
+        preferences.getString(username, null)?.let {
+            return it == password
+        }
+        return false
+    }
+
+    private fun checkUsernameExists(username: String): Boolean {
+        return preferences.contains(username)
     }
 
     fun logout() {

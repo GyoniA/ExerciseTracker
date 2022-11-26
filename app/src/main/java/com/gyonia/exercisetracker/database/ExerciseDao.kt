@@ -19,7 +19,4 @@ interface ExerciseDao {
 
     @Query("SELECT * FROM exercise WHERE id == :id")
     fun getExerciseById(id: Int?): RoomExercise?
-
-    @Query("SELECT * FROM exercise WHERE ownerUserId == :ownerUserId")
-    fun getExercisesByOwnerUserId(ownerUserId: String): LiveData<List<RoomExercise>>
 }

@@ -3,6 +3,7 @@ package com.gyonia.exercisetracker
 import android.app.Application
 import androidx.room.Room
 import com.gyonia.exercisetracker.database.ExerciseDatabase
+import com.gyonia.exercisetracker.viewmodel.ExerciseViewModel
 
 class ExerciseApplication : Application() {
 
@@ -10,6 +11,7 @@ class ExerciseApplication : Application() {
         lateinit var exerciseDatabase: ExerciseDatabase
             private set
 
+        var exerciseViewModel: ExerciseViewModel? = null
         var userId: String = ""
     }
 

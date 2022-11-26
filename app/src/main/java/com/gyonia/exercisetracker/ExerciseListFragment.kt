@@ -36,6 +36,7 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         exerciseViewModel = ViewModelProvider(this).get(ExerciseViewModel::class.java)
+        ExerciseApplication.exerciseViewModel = exerciseViewModel
         exerciseViewModel.allExercises.observe(this) { exercises ->
             simpleItemRecyclerViewAdapter.submitList(exercises)
         }
@@ -130,4 +131,6 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
     override fun onExerciseCreated(exercise: Exercise) {
         exerciseViewModel.insert(exercise)
     }
+
+
 }

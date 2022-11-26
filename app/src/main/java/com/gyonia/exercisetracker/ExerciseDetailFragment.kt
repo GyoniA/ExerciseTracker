@@ -20,7 +20,7 @@ import kotlin.concurrent.thread
  * in two-pane mode (on larger screen devices) or self-contained
  * on handsets.
  */
-class ExerciseDetailFragment : Fragment() {
+class ExerciseDetailFragment () : Fragment() {
 
     private fun RoomExercise.toDomainModel(): Exercise {
         return Exercise(
@@ -108,10 +108,13 @@ class ExerciseDetailFragment : Fragment() {
             selectedExercise?.let { exercise ->
                 exercise.amountDoneOnDate[date] =
                     binding.inputAmountDone?.text.toString().toInt()
+                thread {
+                    ExerciseApplication.exerciseViewModel?.update(exercise)
+                }
             }
             updateChart()
         }
-        selectedExercise?.amountDoneOnDate?.clear()
+        //selectedExercise?.amountDoneOnDate?.clear()
         updateChart()
     }
 

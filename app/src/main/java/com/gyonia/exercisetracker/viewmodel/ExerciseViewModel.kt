@@ -24,6 +24,10 @@ class ExerciseViewModel : ViewModel() {
         repository.insert(exercise)
     }
 
+    fun update(exercise: Exercise) = viewModelScope.launch {
+        repository.update(exercise)
+    }
+
     fun delete(exercise: Exercise) = viewModelScope.launch {
         repository.delete(exercise)
     }

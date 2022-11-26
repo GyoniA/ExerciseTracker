@@ -32,29 +32,6 @@ class LoginDataSource {
                     return Result.Error(IOException("Error logging in with new credentials"))
                 }
             }
-/*
-            if (dao.checkUsernameExists(username)) {
-                var id = dao.getIdFromLoginInfo(username, password)
-                if (id != null) {
-                    ExerciseApplication.userId = id.toString()
-                    return Result.Success(LoggedInUser(id.toString(), username))
-                } else  {
-                    return Result.Error(IOException("Incorrect password"))
-                }
-            } else {
-                dao.insertLogin(com.gyonia.exercisetracker.database.RoomLogin(0, username, password))
-                var id = dao.getIdFromLoginInfo(username, password)
-                if (id != null) {
-                    ExerciseApplication.userId = id.toString()
-                    return Result.Success(LoggedInUser(id.toString(), username))
-                } else  {
-                    return Result.Error(IOException("Error logging in with new credentials"))
-                }
-            }*/
-
-            /*
-            val fakeUser = LoggedInUser(java.util.UUID.randomUUID().toString(), "Jane Doe")
-            return Result.Success(fakeUser)*/
         } catch (e: Throwable) {
             return Result.Error(IOException("Error logging in", e))
         }

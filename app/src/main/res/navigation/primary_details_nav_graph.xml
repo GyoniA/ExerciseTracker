@@ -11,7 +11,11 @@
         android:label="@string/exercises">
         <action
             android:id="@+id/show_exercise_detail"
-            app:destination="@id/exercise_detail_fragment" />
+            app:destination="@id/exercise_detail_fragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/fade_in"
+            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
     <fragment
         android:id="@+id/exercise_detail_fragment"

@@ -119,7 +119,7 @@ class ExerciseListFragment : Fragment(), ExerciseCreateFragment.ExerciseCreatedL
         } else  if (item.itemId == R.id.settings) {
             val intentSettings = Intent(context, SettingsActivity::class.java)
             startActivity(intentSettings)
-        } else if (item.itemId == R.id.exit) {
+        } else if (item.itemId == R.id.logout) {
             activity?.finish()
         }
         return super.onOptionsItemSelected(item)
